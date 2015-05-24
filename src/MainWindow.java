@@ -17,6 +17,20 @@ public class MainWindow extends javax.swing.JFrame {
      */
     public MainWindow() {
         initComponents();
+        setAllText();
+        
+    }
+    
+    private void setAllText() {
+        
+        Language english = new English();
+        Language hindi = new Hindi();
+        
+        Start1.setText(english.languageName());
+        Start.setText(hindi.languageName());
+        
+        jLabel1.setText(english.selectLanguage());
+        jLabel2.setText(hindi.selectLanguage());
     }
 
     /**
@@ -31,6 +45,9 @@ public class MainWindow extends javax.swing.JFrame {
 
         ATM_Label = new javax.swing.JLabel();
         Start = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        Start1 = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(500, 500));
@@ -40,10 +57,13 @@ public class MainWindow extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.insets = new java.awt.Insets(8, 0, 37, 0);
+        gridBagConstraints.insets = new java.awt.Insets(8, 0, 76, 0);
         getContentPane().add(ATM_Label, gridBagConstraints);
 
-        Start.setText("Get Started!");
+        Start.setText("हिन्दी");
+        Start.setMaximumSize(new java.awt.Dimension(95, 29));
+        Start.setMinimumSize(new java.awt.Dimension(95, 29));
+        Start.setPreferredSize(new java.awt.Dimension(95, 29));
         Start.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 StartActionPerformed(evt);
@@ -51,17 +71,54 @@ public class MainWindow extends javax.swing.JFrame {
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.insets = new java.awt.Insets(30, 0, 6, 0);
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.insets = new java.awt.Insets(5, 0, 4, 0);
         getContentPane().add(Start, gridBagConstraints);
+
+        jLabel1.setText("jLabel1");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 10, 0);
+        getContentPane().add(jLabel1, gridBagConstraints);
+
+        Start1.setText("English");
+        Start1.setMaximumSize(new java.awt.Dimension(95, 29));
+        Start1.setMinimumSize(new java.awt.Dimension(95, 29));
+        Start1.setPreferredSize(new java.awt.Dimension(95, 29));
+        Start1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Start1ActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.insets = new java.awt.Insets(7, 0, 6, 0);
+        getContentPane().add(Start1, gridBagConstraints);
+
+        jLabel2.setText("jLabel2");
+        jLabel2.setMaximumSize(new java.awt.Dimension(59, 20));
+        jLabel2.setMinimumSize(new java.awt.Dimension(59, 20));
+        jLabel2.setPreferredSize(new java.awt.Dimension(59, 20));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.insets = new java.awt.Insets(0, 0, 15, 0);
+        getContentPane().add(jLabel2, gridBagConstraints);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void StartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_StartActionPerformed
         // TODO add your handling code here:
-        changePanel(new EnterPIN(this));
+        changePanel(new EnterPIN(this, new Hindi()));
     }//GEN-LAST:event_StartActionPerformed
+
+    private void Start1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Start1ActionPerformed
+        // TODO add your handling code here:
+        changePanel(new EnterPIN(this, new English()));
+    }//GEN-LAST:event_Start1ActionPerformed
 
     public void changePanel(Container container)
     {
@@ -99,9 +156,11 @@ public class MainWindow extends javax.swing.JFrame {
         
         MainWindow ob = new MainWindow();
 //        ob.jLabel1.requestFocus();
+        
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new MainWindow().setVisible(true);
             }
@@ -110,5 +169,9 @@ public class MainWindow extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel ATM_Label;
     private javax.swing.JButton Start;
+    private javax.swing.JButton Start1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     // End of variables declaration//GEN-END:variables
+
 }

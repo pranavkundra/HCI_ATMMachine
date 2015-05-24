@@ -19,20 +19,30 @@ public class Menu extends javax.swing.JPanel {
     JFrame frame;
     Data data;
     String key;
+    Language lang;
     
     /**
      * Creates new form Menu
      */
     public Menu() {
         initComponents();
+        setAllText();
     }
     
     /**
      * Creates new form Menu using parameterized constructor
      */
     public Menu(JFrame frame, String key) {
+        this(frame, key, new English());
+    }
+    
+    /**
+     * Creates new form Menu using parameterized constructor
+     */
+    public Menu(JFrame frame, String key, Language lang) {
         this.frame=frame;
         this.key=key;
+        this.lang=lang;
         
         try
         {
@@ -42,7 +52,17 @@ public class Menu extends javax.swing.JPanel {
         catch(IOException e) {}
         
         initComponents();
-        Welcome.setText("Welcome " + this.data.getName(key) + "!");
+        setAllText();
+        Welcome.setText(this.lang.welcome()+ " " + this.data.getName(key) + this.lang.exclamation());
+    }
+    
+    
+    private void setAllText() {
+        Welcome.setText(lang.welcome() + " " + lang.exclamation());
+        Balance.setText(lang.checkBalance());
+        Deposit.setText(lang.deposit());
+        Withdraw.setText(lang.withdraw());
+        Exit.setText(lang.exitATM());
     }
 
     /**
@@ -142,12 +162,12 @@ public class Menu extends javax.swing.JPanel {
 
     private void BalanceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BalanceActionPerformed
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog(frame, "Your balance is Rs. " + data.getBalance(key));
+        JOptionPane.showMessageDialog(frame, lang.balanceMessage() + lang.convertEnglishNumber(data.getBalance(key)) + lang.fullStop());
     }//GEN-LAST:event_BalanceActionPerformed
 
     private void DepositActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DepositActionPerformed
         // TODO add your handling code here:
-        String deposit = JOptionPane.showInputDialog(frame, "Enter the deposit amount");
+        String deposit = JOptionPane.showInputDialog(frame, lang.depositPrompt());
         
         int deposit_value=0;
         if(deposit.matches("[0-9]+"))
@@ -156,16 +176,16 @@ public class Menu extends javax.swing.JPanel {
         
             data.augmentBalance(key, deposit_value);
 
-            JOptionPane.showMessageDialog(frame, "Your balance is Rs. " + data.getBalance(key));
+            JOptionPane.showMessageDialog(frame, lang.balanceMessage() + lang.convertEnglishNumber(data.getBalance(key)) + lang.fullStop());
         }
         
         else
-            JOptionPane.showMessageDialog(frame, "Invalid Deposit Amount!");
+            JOptionPane.showMessageDialog(frame, lang.invalidDeposit());
     }//GEN-LAST:event_DepositActionPerformed
 
     private void WithdrawActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_WithdrawActionPerformed
         // TODO add your handling code here:
-        String withdrawal = JOptionPane.showInputDialog(frame, "Enter the deposit amount");
+        String withdrawal = JOptionPane.showInputDialog(frame, lang.withdrawalPrompt());
         
         int withdrawal_value=0;
         if(withdrawal.matches("[0-9]+"))
@@ -179,15 +199,15 @@ public class Menu extends javax.swing.JPanel {
         
                 data.augmentBalance(key, withdrawal_value);
 
-                JOptionPane.showMessageDialog(frame, "Your balance is Rs. " + data.getBalance(key));
+                JOptionPane.showMessageDialog(frame, lang.balanceMessage() + lang.convertEnglishNumber(data.getBalance(key)) + lang.fullStop());
             }
             
             else
-                JOptionPane.showMessageDialog(frame, "Insufficient Funds for Withdrawal!");
+                JOptionPane.showMessageDialog(frame, lang.excessWithdrawal());
         }
         
         else
-            JOptionPane.showMessageDialog(frame, "Invalid Withdrawal Amount!");
+            JOptionPane.showMessageDialog(frame, lang.invalidWithdrawal());
     }//GEN-LAST:event_WithdrawActionPerformed
 
     private void saveData()
@@ -207,4 +227,5 @@ public class Menu extends javax.swing.JPanel {
     private javax.swing.JLabel Welcome;
     private javax.swing.JButton Withdraw;
     // End of variables declaration//GEN-END:variables
+
 }

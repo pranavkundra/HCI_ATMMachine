@@ -23,7 +23,7 @@
   <SubComponents>
     <Component class="javax.swing.JLabel" name="PIN_Label">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Enter PIN"/>
+        <Property name="text" type="java.lang.String" value="PIN_Label"/>
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
@@ -223,7 +223,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="AC_No_Label">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Enter Account Number"/>
+        <Property name="text" type="java.lang.String" value="AC_No_Label"/>
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
@@ -239,6 +239,7 @@
         </Property>
       </Properties>
       <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="AC_No_TextFieldActionPerformed"/>
         <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="AC_No_TextFieldFocusGained"/>
         <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="AC_No_TextFieldFocusLost"/>
       </Events>

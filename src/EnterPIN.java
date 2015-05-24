@@ -1,6 +1,7 @@
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.HashMap;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -17,6 +18,8 @@ import javax.swing.JOptionPane;
 public class EnterPIN extends javax.swing.JPanel 
 {
     JFrame frame;
+    Language lang;
+    HashMap<JButton, String> buttonMap;
 
     /**
      * Creates new form EnterPIN
@@ -24,8 +27,10 @@ public class EnterPIN extends javax.swing.JPanel
     public EnterPIN() 
     {
         initComponents();
+        setAllText();
         PIN_TextField.setHorizontalAlignment(PIN_TextField.CENTER);
         frame=null;
+        setButtons();
     }
     
     /**
@@ -33,11 +38,61 @@ public class EnterPIN extends javax.swing.JPanel
      */
     public EnterPIN(JFrame frame) 
     {
+        this(frame, new English());
+    }
+    
+    /**
+     * Creates new form EnterPIN using parameterized constructor
+     */
+    public EnterPIN(JFrame frame, Language lang) 
+    {
         this.frame = frame;
+        this.lang = lang;
         initComponents();
+        setAllText();
+        setButtons();
         PIN_TextField.setHorizontalAlignment(PIN_TextField.CENTER);
     }
 
+    
+    private void setAllText() {
+        PIN_Label.setText(lang.enterPIN());
+       
+        jButton0.setText(lang._0());
+        jButton1.setText(lang._1());
+        jButton2.setText(lang._2());
+        jButton3.setText(lang._3());
+        jButton4.setText(lang._4());
+        jButton5.setText(lang._5());
+        jButton6.setText(lang._6());
+        jButton7.setText(lang._7());
+        jButton8.setText(lang._8());
+        jButton9.setText(lang._9());
+        
+        AC_No_Label.setText(lang.enterAccountNumberLabel());
+        AC_No_TextField.setText(lang.enterAccountNumberPlaceholder());
+        
+        Reset_AC_No.setText(lang.reset());
+        Reset_PIN.setText(lang.reset());
+        Submit.setText(lang.submit());
+        
+        
+    }
+    
+    private void setButtons() {
+        buttonMap = new HashMap<JButton, String>();
+        
+        buttonMap.put(jButton0, "0");
+        buttonMap.put(jButton1, "1");
+        buttonMap.put(jButton2, "2");
+        buttonMap.put(jButton3, "3");
+        buttonMap.put(jButton4, "4");
+        buttonMap.put(jButton5, "5");
+        buttonMap.put(jButton6, "6");
+        buttonMap.put(jButton7, "7");
+        buttonMap.put(jButton8, "8");
+        buttonMap.put(jButton9, "9");
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -70,7 +125,7 @@ public class EnterPIN extends javax.swing.JPanel
         setPreferredSize(new java.awt.Dimension(500, 500));
         setLayout(new java.awt.GridBagLayout());
 
-        PIN_Label.setText("Enter PIN");
+        PIN_Label.setText("PIN_Label");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 2;
@@ -207,7 +262,7 @@ public class EnterPIN extends javax.swing.JPanel
         gridBagConstraints.gridy = 6;
         add(jButton9, gridBagConstraints);
 
-        AC_No_Label.setText("Enter Account Number");
+        AC_No_Label.setText("AC_No_Label");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
@@ -216,6 +271,11 @@ public class EnterPIN extends javax.swing.JPanel
 
         AC_No_TextField.setText("Enter account number here...");
         AC_No_TextField.setMinimumSize(new java.awt.Dimension(195, 28));
+        AC_No_TextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AC_No_TextFieldActionPerformed(evt);
+            }
+        });
         AC_No_TextField.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 AC_No_TextFieldFocusGained(evt);
@@ -292,19 +352,23 @@ public class EnterPIN extends javax.swing.JPanel
 
     private void AC_No_TextFieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_AC_No_TextFieldFocusGained
         // TODO add your handling code here:
-        if(AC_No_TextField.getText().trim().equals("Enter account number here..."))
+        if(AC_No_TextField.getText().trim().equals(lang.enterAccountNumberPlaceholder()))
             AC_No_TextField.setText("");
     }//GEN-LAST:event_AC_No_TextFieldFocusGained
 
     private void AC_No_TextFieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_AC_No_TextFieldFocusLost
         // TODO add your handling code here:
         if(AC_No_TextField.getText().trim().equals(""))
-            AC_No_TextField.setText("Enter account number here...");
+        {
+            AC_No_TextField.setText(lang.enterAccountNumberPlaceholder());
+            PIN_TextField.setText("");
+        }
         
         else if(!AC_No_TextField.getText().trim().matches("[0-9]+"))
         {
-            JOptionPane.showMessageDialog(frame, "Please enter only a numerical account number");
-            AC_No_TextField.setText("Enter account number here...");
+            JOptionPane.showMessageDialog(frame, lang.numericalAccountNumberMessage());
+            AC_No_TextField.setText(lang.enterAccountNumberPlaceholder());
+            PIN_TextField.setText("");
         }
     }//GEN-LAST:event_AC_No_TextFieldFocusLost
 
@@ -355,7 +419,7 @@ public class EnterPIN extends javax.swing.JPanel
 
     private void Reset_AC_NoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Reset_AC_NoActionPerformed
         // TODO add your handling code here:
-        AC_No_TextField.setText("Enter account number here...");
+        AC_No_TextField.setText(lang.enterAccountNumberPlaceholder());
     }//GEN-LAST:event_Reset_AC_NoActionPerformed
 
     private void Reset_PINActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Reset_PINActionPerformed
@@ -371,29 +435,39 @@ public class EnterPIN extends javax.swing.JPanel
             String pin = data.getPIN(AC_No_TextField.getText());
             
             if(pin.equals("InvalidPIN"))
-                JOptionPane.showMessageDialog(frame, "Invalid Account Number");
+            {
+                JOptionPane.showMessageDialog(frame, lang.invalidAcNo());
+                PIN_TextField.setText("");
+            }
             
             else if(pin.equals(new String(PIN_TextField.getPassword())))
             {
-                frame.setContentPane(new Menu(frame, AC_No_TextField.getText()));
+                frame.setContentPane(new Menu(frame, AC_No_TextField.getText(), lang));
                 frame.invalidate();
                 frame.validate();
             }
             
             else
-                JOptionPane.showMessageDialog(frame, "PIN incorrect!");
+            {
+                JOptionPane.showMessageDialog(frame, lang.incorrectPIN());
+                PIN_TextField.setText("");
+            }
         }
         catch(FileNotFoundException e) {}
         catch(IOException e) {}
     }//GEN-LAST:event_SubmitActionPerformed
 
+    private void AC_No_TextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AC_No_TextFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_AC_No_TextFieldActionPerformed
+
     private void updatePIN(java.awt.event.ActionEvent evt)
     {
         JButton button = (JButton)(evt.getSource());
-        String append_value = button.getText();
+        String append_value = buttonMap.get(button);
         String current_pin = new String(PIN_TextField.getPassword());
         PIN_TextField.setText(current_pin + append_value);
-//        System.out.println(current_pin+append_value);
+//        System.out.println("PIN " + current_pin+append_value);
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -415,4 +489,5 @@ public class EnterPIN extends javax.swing.JPanel
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
     // End of variables declaration//GEN-END:variables
+
 }
