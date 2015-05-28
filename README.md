@@ -10,3 +10,8 @@ The user interface currently supports two languages, English and Hindi. More lan
 Built using Java Swing.
 
 Intended to be opened as a Netbeans project.
+
+ScreenShots:
+=============
+
+![alt tag](./ScreenShots/ScreenShot 1.tiff)
