@@ -15,3 +15,9 @@ ScreenShots:
 =============
 
 ![alt tag](./ScreenShots/ScreenShot 1.tiff)
+
+![alt tag](./ScreenShots/ScreenShot 2.tiff)
+
+![alt tag](./ScreenShots/ScreenShot 3.tiff)
+
+![alt tag](./ScreenShots/ScreenShot 4.tiff)
